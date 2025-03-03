@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EP FACTORY - Soluciones tecnológicas integrales para tu negocio">
+    <meta name="theme-color" content="#f8bd24">
+    <title>EP FACTORY</title>
+    
+    <!-- Precargar recursos críticos -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style">
+    <link rel="preload" href="styles.css" as="style">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Estilos adicionales para corregir problemas de scroll */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Ajustes para contenedores */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        
+        /* Ajustes para secciones */
+        section {
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        /* Ajustes específicos para las tarjetas de servicios */
+        .servicio-card {
+            height: 420px; /* Altura fija aumentada */
+            max-width: 100%;
+            perspective: 1500px;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            padding: 1.5rem; /* Reducido de 2rem */
+            box-sizing: border-box;
+        }
+        
+        .card-back {
+            background: var(--light);
+            transform: rotateY(180deg);
+            box-shadow: var(--shadow);
+            overflow: hidden; /* Cambiado de auto a hidden */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* Ajustes para el contenido de las tarjetas */
+        .servicio-description {
+            font-size: 0.85rem; /* Reducido de 0.9rem */
+            margin-bottom: 0.8rem; /* Reducido de 1.5rem */
+            text-align: center;
+        }
+        
+        .servicio-features {
+            list-style: none;
+            margin-bottom: 1rem; /* Reducido de 1.5rem */
+        }
+        
+        .servicio-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem; /* Reducido de 0.8rem */
+            font-size: 0.8rem; /* Reducido de 0.9rem */
+        }
+        
+        .servicio-gif {
+            width: 60px; /* Reducido de 80px */
+            height: 60px; /* Reducido de 80px */
+            margin: 0 auto 0.5rem; /* Reducido de 1rem */
+        }
+        
+        .btn-cotizar {
+            padding: 0.7rem; /* Reducido de 0.8rem */
+            margin-top: auto; /* Empuja el botón al final */
+        }
+        
+        /* Ajustes para grids responsivos */
+        @media (max-width: 768px) {
+            .hero-grid, .contacto-grid, .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .valores-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .servicios-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .valores-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .servicios-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .servicio-card {
+                height: 380px; /* Altura reducida para móviles */
+            }
+        }
+        
+        /* Ajustes para el hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Ajustes para imágenes */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader optimizado -->
+    <div class="preloader">
+        <div class="loader">
+            <img src="EP LOGO.png" alt="EP FACTORY" class="loader-logo animate-pulse">
+            <div class="loader-progress">
+                <div class="loader-bar"></div>
+            </div>
+            <div class="loader-text">
+                <span class="loader-percentage">0</span>%
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación mejorada -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <a href="#inicio" class="logo-link">
+                        <img src="EP LOGO.png" alt="EP FACTORY Logo" width="150" height="40">
+                    </a>
+                </div>
+                
+                <div class="nav-content">
+                    <ul class="nav-links">
+                        <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                        <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                    </ul>
+                    
+                    <button class="menu-toggle" aria-label="Menú principal">
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                        <span class="menu-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section optimizada -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content" data-aos="fade-up">
+                    <h1 class="hero-title animate-text">
+                        Impulsamos tu negocio<br>
+                        con tecnología de<br>
+                        <span class="highlight">vanguardia</span>
+                    </h1>
+                    <p class="hero-subtitle animate-text-delay">
+                        Innovación y tecnología<br>
+                        para crecer juntos
+                    </p>
+                    <div class="hero-cta animate-fade-in">
+                        <a href="#contacto" class="btn-primary">
+                            <span>Comencemos</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image" data-aos="fade-left">
+                    <img src="Gif inicio.gif" alt="Tecnología de vanguardia" width="600" height="400" class="animate-float">
+                    <div class="hero-image-overlay"></div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Más que un servicio - Sección mejorada -->
+    <section id="nosotros" class="mas-que-servicio">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title animate-text">
+                    Más que un<br>servicio, un<br>equipo a tu<br>lado
+                </h2>
+            </div>
+            <div class="valores-grid">
+                <!-- Soluciones a la medida -->
+                <div class="valor-item" data-aos="fade-up">
+                    <div class="valor-icon">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-tools icon-primary"></i>
+                            <div class="icon-background"></div>
+                            <div class="icon-particles">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="valor-title">Soluciones a la medida</h3>
+                    <div class="valor-hover">
+                        <div class="valor-content">
+                            <p>Desarrollamos soluciones personalizadas para tu negocio</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Innovación constante -->
+                <div class="valor-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="valor-icon">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-lightbulb icon-primary"></i>
+                            <div class="icon-background"></div>
+                            <div class="icon-particles">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="valor-title">Innovación constante</h3>
+                    <div class="valor-hover">
+                        <div class="valor-content">
+                            <p>Siempre a la vanguardia en tecnología</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experiencia real -->
+                <div class="valor-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="valor-icon">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-chart-line icon-primary"></i>
+                            <div class="icon-background"></div>
+                            <div class="icon-particles">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="valor-title">Experiencia real</h3>
+                    <div class="valor-hover">
+                        <div class="valor-content">
+                            <p>Años de experiencia en el sector tecnológico</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acompañamiento real -->
+                <div class="valor-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="valor-icon">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-users icon-primary"></i>
+                            <div class="icon-background"></div>
+                            <div class="icon-particles">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="valor-title">Acompañamiento real</h3>
+                    <div class="valor-hover">
+                        <div class="valor-content">
+                            <p>Soporte y seguimiento continuo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compromiso con la calidad -->
+                <div class="valor-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="valor-icon">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-award icon-primary"></i>
+                            <div class="icon-background"></div>
+                            <div class="icon-particles">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="valor-title">Compromiso con la calidad</h3>
+                    <div class="valor-hover">
+                        <div class="valor-content">
+                            <p>Excelencia en cada proyecto</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestros Servicios - Sección mejorada sin scroll -->
+    <section id="servicios" class="nuestros-servicios">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Nuestros servicios</h2>
+            </div>
+            <div class="servicios-grid">
+                <!-- Desarrollo Web -->
+                <div class="servicio-card" data-aos="fade-up">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="servicio-icon">
+                                <i class="fas fa-laptop-code"></i>
+                                <div class="icon-particles">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <h3 class="servicio-title">DESARROLLO WEB</h3>
+                        </div>
+                        <div class="card-back">
+                            <div class="servicio-gif">
+                                <img src="Desarrollo web.gif" alt="Desarrollo Web" class="floating">
+                            </div>
+                            <p class="servicio-description">
+                                Sitios web personalizados para tu negocio, con un diseño atractivo y práctico.
+                            </p>
+                            <ul class="servicio-features">
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Diseño y creación de sitios personalizados</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Optimización UX/UI y para móviles</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Integración con pagos y bases de datos</span>
+                                </li>
+                            </ul>
+                            <button class="btn-cotizar">
+                                <span>Cotizar ahora</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Software y Sistemas -->
+                <div class="servicio-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="servicio-icon">
+                                <i class="fas fa-brain"></i>
+                                <div class="icon-particles">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <h3 class="servicio-title">SOFTWARE Y<br>SISTEMAS A MEDIDA</h3>
+                        </div>
+                        <div class="card-back">
+                            <div class="servicio-gif">
+                                <img src="software.gif" alt="Software" class="floating">
+                            </div>
+                            <p class="servicio-description">
+                                Creamos ERP, CRM y software a medida, con soporte y actualizaciones continuas.
+                            </p>
+                            <ul class="servicio-features">
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Aplicaciones empresariales personalizadas</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Desarrollo de ERP y CRM</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Mantenimiento y actualizaciones</span>
+                                </li>
+                            </ul>
+                            <button class="btn-cotizar">
+                                <span>Cotizar ahora</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Bases de Datos -->
+                <div class="servicio-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="servicio-icon">
+                                <i class="fas fa-database"></i>
+                                <div class="icon-particles">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <h3 class="servicio-title">GESTIÓN DE<br>BASES DE DATOS</h3>
+                        </div>
+                        <div class="card-back">
+                            <div class="servicio-gif">
+                                <img src="Base de datos.gif" alt="Base de Datos" class="floating">
+                            </div>
+                            <p class="servicio-description">
+                                Optimizamos, protegemos y respaldamos bases de datos para un manejo seguro y eficiente.
+                            </p>
+                            <ul class="servicio-features">
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Diseño, optimización y mantenimiento</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Respaldo y recuperación de datos</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Seguridad y encriptación</span>
+                                </li>
+                            </ul>
+                            <button class="btn-cotizar">
+                                <span>Cotizar ahora</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soporte y Mantenimiento -->
+                <div class="servicio-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="servicio-icon">
+                                <i class="fas fa-headset"></i>
+                                <div class="icon-particles">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <h3 class="servicio-title">SOPORTE Y<br>MANTENIMIENTO</h3>
+                        </div>
+                        <div class="card-back">
+                            <div class="servicio-gif">
+                                <img src="soporte.gif" alt="Soporte" class="floating">
+                            </div>
+                            <p class="servicio-description">
+                                Solucionamos problemas, instalamos sistemas y realizamos mantenimiento.
+                            </p>
+                            <ul class="servicio-features">
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Solución de problemas de hardware y software</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Instalación y configuración de sistemas</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Monitoreo y mantenimiento preventivo</span>
+                                </li>
+                            </ul>
+                            <button class="btn-cotizar">
+                                <span>Cotizar ahora</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consultoría Tecnológica -->
+                <div class="servicio-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="servicio-icon">
+                                <i class="fas fa-lightbulb"></i>
+                                <div class="icon-particles">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                            <h3 class="servicio-title">CONSULTORÍA<br>TECNOLÓGICA</h3>
+                        </div>
+                        <div class="card-back">
+                            <div class="servicio-gif">
+                                <img src="consultoria.gif" alt="Consultoría" class="floating">
+                            </div>
+                            <p class="servicio-description">
+                                Brindamos asesoría en transformación digital, tecnología y ciberseguridad.
+                            </p>
+                            <ul class="servicio-features">
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Adopción de nuevas tecnologías</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Estrategias digitales para negocios</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check"></i>
+                                    <span>Capacitación en herramientas y seguridad</span>
+                                </li>
+                            </ul>
+                            <button class="btn-cotizar">
+                                <span>Cotizar ahora</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nuestra Manera de Trabajar -->
+    <section class="manera-trabajar">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Nuestra Manera de Trabajar</h2>
+            </div>
+            <div class="pasos-timeline">
+                <div class="paso" data-aos="fade-right">
+                    <div class="paso-numero">1</div>
+                    <div class="paso-content">
+                        <h3 class="paso-title">Escuchamos tu necesidad:</h3>
+                        <p class="paso-description">
+                            Analizamos tus objetivos y desafíos para entender qué solución se adapta mejor a tu negocio.
+                        </p>
+                    </div>
+                </div>
+                <div class="paso" data-aos="fade-right" data-aos-delay="200">
+                    <div class="paso-numero">2</div>
+                    <div class="paso-content">
+                        <h3 class="paso-title">Diseñamos la solución ideal:</h3>
+                        <p class="paso-description">
+                            Creamos una estrategia tecnológica a la medida, asegurando funcionalidad, seguridad y facilidad de uso.
+                        </p>
+                    </div>
+                </div>
+                <div class="paso" data-aos="fade-right" data-aos-delay="400">
+                    <div class="paso-numero">3</div>
+                    <div class="paso-content">
+                        <h3 class="paso-title">Implementamos y acompañamos:</h3>
+                        <p class="paso-description">
+                            Nos encargamos de la puesta en marcha y te brindamos soporte para que todo funcione sin complicaciones.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="tecnologia-mensaje" data-aos="fade-up">
+                <h2>Tecnología que impulsa tu negocio y te ayuda a crecer con confianza.</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="contacto">
+        <div class="container">
+            <div class="contacto-grid">
+                <div class="contacto-info" data-aos="fade-right">
+                    <h2 class="contacto-title">Hablemos</h2>
+                    <p class="contacto-description">
+                        ¿Tienes un proyecto en mente o necesitas asesoramiento tecnológico? 
+                        Estamos aquí para ayudarte. Escríbenos y nuestro equipo se pondrá en 
+                        contacto contigo lo antes posible.
+                    </p>
+                    
+                    <div class="contacto-detalles">
+                        <div class="contacto-item">
+                            <div class="contacto-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contacto-text">
+                                <h4>Llámanos</h4>
+                                <p>992225460</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contacto-item">
+                            <div class="contacto-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contacto-text">
+                                <h4>Escríbenos</h4>
+                                <p>info@epfactory.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contacto-item">
+                            <div class="contacto-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contacto-text">
+                                <h4>Visítanos</h4>
+                                <p>Calle Juan Bolivar Mza.D Lote.27 Asc. Las flores Lima-Lima-Ate</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contacto-form" data-aos="fade-left">
+                    <div class="form-group">
+                        <label for="nombre">Nombre*</label>
+                        <input 
+                            type="text" 
+                            id="nombre" 
+                            name="nombre"
+                            placeholder="Escribe tu nombre aquí" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Correo electrónico de contacto*</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            placeholder="Escribe tu correo aquí" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefono">Numero de teléfono*</label>
+                        <input 
+                            type="tel" 
+                            id="telefono" 
+                            name="telefono"
+                            placeholder="Escribe tu teléfono aquí" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje o consulta*</label>
+                        <textarea 
+                            id="mensaje" 
+                            name="mensaje"
+                            placeholder="Escribe tu mensaje aquí" 
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn-enviar">
+                        <span>Enviar consulta ahora</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <img src="EP LOGO.png" alt="EP FACTORY Logo" class="footer-logo">
+                    <div class="footer-contact">
+                        <p><i class="fas fa-phone"></i> 992225460</p>
+                        <p><i class="fas fa-envelope"></i> info@epfactory.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Calle Juan Bolivar Mza.D Lote.27 Asc. Las flores Lima-Lima-Ate</p>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Redes sociales</h4>
+                    <div class="social-links">
+                        <a href="#" target="_blank" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Mapa de sitio</h4>
+                    <ul>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#contacto">Contactanos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Desarrollo y tecnología</h4>
+                    <ul>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 EP FACTORY. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Prevenir scroll horizontal
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar AOS
+            AOS.init({
+                duration: 800,
+                offset: 100,
+                once: true,
+                easing: 'ease-out-cubic'
+            });
+            
+            // Asegurar que no haya scroll horizontal
+            document.body.style.overflowX = 'hidden';
+            
+            // Manejar el preloader
+            const preloader = document.querySelector('.preloader');
+            const loaderBar = document.querySelector('.loader-bar');
+            const loaderPercentage = document.querySelector('.loader-percentage');
+            
+            let progress = 0;
+            const updateLoader = () => {
+                progress += (100 - progress) * 0.05;
+                loaderBar.style.width = `${progress}%`;
+                loaderPercentage.textContent = Math.round(progress);
+                
+                if (progress >= 99.9) {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        document.body.classList.add('loaded');
+                    }, 300);
+                } else {
+                    requestAnimationFrame(updateLoader);
+                }
+            };
+            
+            requestAnimationFrame(updateLoader);
+            
+            // Eliminar scroll en tarjetas de servicios
+            const cardBacks = document.querySelectorAll('.card-back');
+            cardBacks.forEach(card => {
+                card.style.overflow = 'hidden';
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
